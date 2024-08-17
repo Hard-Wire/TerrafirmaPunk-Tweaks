@@ -1,7 +1,11 @@
 package com.JAWolfe.terrafirmapunktweaks;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.JAWolfe.terrafirmapunktweaks.blocks.TFPBlocks;
 import com.JAWolfe.terrafirmapunktweaks.handlers.*;
+import com.JAWolfe.terrafirmapunktweaks.inventory.TFCInventoryTweaker;
 import com.JAWolfe.terrafirmapunktweaks.items.TFPItems;
 import com.JAWolfe.terrafirmapunktweaks.minetweaker.TFCTweaker;
 import com.JAWolfe.terrafirmapunktweaks.proxy.CommonProxy;
@@ -20,6 +24,10 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod(modid = References.ModID, name = References.ModName, version = References.ModVersion, dependencies = References.ModDependencies)
 public class TerraFirmaPunkTweaks
 {    			
+	// Add this field to your main class
+	public static final Logger logger = LogManager.getLogger(References.ModID);
+
+	
 	@Mod.Instance(References.ModID)
 	public static TerraFirmaPunkTweaks instance;
 			
@@ -64,7 +72,7 @@ public class TerraFirmaPunkTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{        	    	
     	TFCTweaker.postInit();
-    	
+    	TFCInventoryTweaker.TweakInventory();
     	RecipeTweaks.SC2RecipeTweaks();
 	}
 }

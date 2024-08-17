@@ -4,15 +4,18 @@ import java.util.List;
 
 import com.JAWolfe.terrafirmapunktweaks.handlers.FuelManager;
 import com.JAWolfe.terrafirmapunktweaks.reference.ConfigSettings;
+import com.JAWolfe.terrafirmapunktweaks.reference.References;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
 
 import cpw.mods.fml.common.Loader;
+import flaxbeard.steamcraft.SteamcraftItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 import steamcraft.common.init.InitBlocks;
 
 public class RecipeTweaks 
@@ -52,9 +55,11 @@ public class RecipeTweaks
 		
 		FuelManager.getInstance().addFuel(new ItemStack(Item.getItemFromBlock(TFCBlocks.peat), 1));
 		
-		if(Loader.isModLoaded("Steamcraft"))
+		if(Loader.isModLoaded(References.MODID_FSP))
 		{
-			//OreDictionary.registerOre("itemAxe", new ItemStack(SteamcraftItems.steamAxe, 1, OreDictionary.WILDCARD_VALUE));
+			//Adds the ability to chop TFC trees with steam axe
+			OreDictionary.registerOre("itemAxe", new ItemStack(SteamcraftItems.steamAxe, 1, OreDictionary.WILDCARD_VALUE));
+			OreDictionary.registerOre("itemAxeSteam", new ItemStack(SteamcraftItems.steamAxe, 1, OreDictionary.WILDCARD_VALUE));
 		}
 	}
 }

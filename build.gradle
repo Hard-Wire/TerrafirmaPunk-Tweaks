@@ -3,10 +3,15 @@ buildscript
     repositories 
 	{
         mavenCentral()
+		/* 
+			Upgrading for Forge 1.7.10
+			https://github.com/anatawa12/ForgeGradle-example#how-to-replace-forgegradle-12-with-anatawa12s-fork
+		*/
+		
         maven 
 		{
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+			url = "https://maven.minecraftforge.net/"
         }
         maven 
 		{
@@ -16,7 +21,9 @@ buildscript
     }
     dependencies 
 	{
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.1.+') {
+			changing = true
+		}
     }
 }
 
@@ -35,27 +42,29 @@ allprojects
 {
     apply plugin: 'java'
     apply plugin: 'forge'
-    apply plugin: 'maven'
+    
+    
+    targetCompatibility = 1.8
+	sourceCompatibility = 1.8
 	
     group = config.group_name
     version = config.mod_version
     archivesBaseName = config.mod_id + "-" + config.minecraft_version
 
     minecraft 
-	{
+	{	
         version = config.minecraft_version + "-" + config.forge_version
 		
 		replaceIn "References.java"
 		replace "@MOD_VERSION@", config.mod_version
+		
+		def tmpDir = '../run/'+config.mod_id
 	
-        if(file('../run').exists()) 
+        if(!file(tmpDir).exists()) 
 		{
-            runDir = "../run"
+            file(tmpDir).mkdirs()
         } 
-		else 
-		{
-            runDir = ""
-        }
+        runDir = tmpDir
     }
 }
 
@@ -71,15 +80,40 @@ repositories
         name 'CB Repo'
         url "http://chickenbones.net/maven/"
     }
+	maven { 
+		url "https://www.cursemaven.com" 
+	}  	 
 }
  
 dependencies 
 {
-	compile "codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev"
-	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev"
-	compile "codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev"
-	compile "mcp.mobius.waila:Waila:1.5.11-RC2-NONEI_1.7.10"
+	//CB NEI
+	//compile "codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev"
+	//compile "codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev"
+	//compile "codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev"
+	
+	//JEI backport
+	compile "curse.maven:codechickencore-unofficial-746279:4378044"
+	compile "curse.maven:codechickenlib-unofficial-746280:4388256"
+	compile "curse.maven:notenoughitems-gtnh-358228:4856800"
+	
+	//compile "mcp.mobius.waila:Waila:1.5.11-RC2-NONEI_1.7.10"
+	compile "curse.maven:waila-73488:2230518"
+	compile fileTree(dir: 'libs', include: '*.jar')
+		
+	compile "curse.maven:crafting-tweaks-233071:2457094"
 }
+
+
+jar {
+    from sourceSets.api.output
+    appendix "mc" + minecraft.version
+
+    manifest {
+        attributes('FMLAT': config.mod_id+'_at.cfg')
+    }
+}
+
 
 //Creates a compiled de-obfuscated jar
 task deobfJar(type: Jar){
@@ -93,7 +127,7 @@ task sourceJar(type: Jar){
     appendix = 'src'
 }
 
-tasks.build.dependsOn('sourceJar', 'deobfJar')
+tasks.build.dependsOn('jar', 'sourceJar', 'deobfJar')
 
 processResources 
 {
@@ -121,6 +155,3 @@ processResources
     }
 }
 
-task wrapper(type: Wrapper){
-	gradleVersion = '2.2.1'
-}

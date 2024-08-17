@@ -15,6 +15,12 @@ public class References
 	public static final String MODID_BC = "BuildCraft|Core";
 	
 	public static final String MODID_FORESTRY = "Forestry";
+	
+	public static final String MODID_NECROMANCY = "necromancy";
+	
+	public static final String MODID_STEVESCARTS = "StevesCarts";
+	
+	public static final String MODID_INVENTORYTWEAKS = "craftingtweaks";
 
 	public static final String ModVersion = "@MOD_VERSION@";
 	
@@ -22,7 +28,10 @@ public class References
 												";required-after:" + MODID_SC2 +
 												";required-after:" + MODID_BC +
 												";required-after:" + MODID_FORESTRY +
-												";required-after:" + MODID_FSP;
+												";required-after:" + MODID_FSP +
+												";required-after:" + MODID_STEVESCARTS + 
+												";required-after:" + MODID_INVENTORYTWEAKS
+												;
 	
 	public static final String SERVER_PROXY_CLASS = "com.JAWolfe.terrafirmapunktweaks.proxy.CommonProxy";
 	public static final String CLIENT_PROXY_CLASS = "com.JAWolfe.terrafirmapunktweaks.proxy.ClientProxy";

@@ -36,6 +36,7 @@ item.Nut Mold.name=Metal Press Mold: Nut
 item.Washer Mold.name=Metal Press Mold: Washer
 item.Hopper Mold.name=Metal Press Mold: Hopper
 item.TFPNecronomicon.name=Necronomicon
+item.SC2:tree_tfp.name=Tree: TFP
 
 #===========
 #= Effects =

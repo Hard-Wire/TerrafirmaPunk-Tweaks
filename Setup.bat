@@ -1,3 +1,3 @@
-gradlew.bat setupdecompworkspace eclipse
+gradle.bat setupdecompworkspace eclipse
 
 pause
