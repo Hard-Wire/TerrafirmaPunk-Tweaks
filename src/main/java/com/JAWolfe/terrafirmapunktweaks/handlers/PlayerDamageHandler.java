@@ -275,7 +275,12 @@ public class PlayerDamageHandler
 	@SubscribeEvent
 	public void onHeal(LivingHealEvent event)
 	{
-		if(event.amount > 1 && event.amount < 9 && ConfigSettings.InstantHealingScaling)
+		PotionEffect regen =  event.entityLiving.getActivePotionEffect(Potion.regeneration);
+		if(ConfigSettings.InstantHealingScaling && 
+				(
+						(event.amount > 1 && event.amount < 9) || 
+						(regen != null)
+				))
 			event.amount = event.amount * ConfigSettings.VanillaHealingMultipier;
 	}
 	
